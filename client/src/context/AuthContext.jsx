@@ -1,0 +1,2 @@
+import {createContext,useContext,useState} from 'react';import {api} from '../services/api';
+const C=createContext();export function AuthProvider({children}){const [token,setToken]=useState(localStorage.getItem('crm_token'));const login=async(credentials)=>{const d=await api.login(credentials);localStorage.setItem('crm_token',d.token);setToken(d.token)};const logout=()=>{localStorage.removeItem('crm_token');setToken(null)};return <C.Provider value={{token,login,logout}}>{children}</C.Provider>}export const useAuth=()=>useContext(C);
